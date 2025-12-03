@@ -116,6 +116,20 @@ const getSubmissions = async (req, res) => {
     }
 };
 
+// @desc    Get my submissions for a course
+// @route   GET /api/assignments/course/:courseId/my-submissions
+// @access  Private
+const getMySubmissionsByCourse = async (req, res) => {
+    try {
+        const assignments = await Assignment.find({ course: req.params.courseId }).select('_id');
+        const assignmentIds = assignments.map(a => a._id);
+        const mySubs = await Submission.find({ assignment: { $in: assignmentIds }, student: req.user._id })
+            .sort('-createdAt');
+        res.json(mySubs);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 // @desc    Grade a submission (manual grading)
 // @route   PUT /api/assignments/:id/grade/:submissionId
 // @access  Private (Admin/Instructor)
@@ -207,6 +221,7 @@ module.exports = {
     getCourseAssignments,
     submitAssignment,
     getSubmissions,
+    getMySubmissionsByCourse,
     gradeSubmission,
     // new methods exported below
     updateAssignment,

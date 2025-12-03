@@ -10,6 +10,7 @@ const { protect, authorize } = require('../middleware/authMiddleware');
 
 router.post('/', protect, authorize('admin', 'instructor'), createAssignment);
 router.get('/course/:courseId', protect, getCourseAssignments);
+router.get('/course/:courseId/my-submissions', protect, require('../controllers/assignmentController').getMySubmissionsByCourse);
 router.post('/:id/submit', protect, submitAssignment);
 router.get('/:id/submissions', protect, authorize('admin', 'instructor'), getSubmissions);
 router.put('/:id/grade/:submissionId', protect, authorize('admin', 'instructor'), require('../controllers/assignmentController').gradeSubmission);
