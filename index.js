@@ -16,6 +16,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/courses', require('./routes/courseRoutes'));
+app.use('/api/enrollments', require('./routes/enrollmentRoutes'));
+app.use('/api/assignments', require('./routes/assignmentRoutes'));
+app.use('/api/instructors', require('./routes/instructorRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 app.get('/', (req, res) => {
   res.send('API is running...');
