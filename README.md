@@ -1,4 +1,4 @@
-# MS Academy Backend
+# CourseMaster Backend
 
 **Overview**
 - Express + Mongoose REST API for authentication, courses, enrollments, assignments, submissions, and instructors.
