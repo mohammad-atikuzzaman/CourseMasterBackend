@@ -99,13 +99,11 @@ const getSubmissions = async (req, res) => {
             return res.status(404).json({ message: 'Assignment not found' });
         }
 
-        // Ownership check: admin can access all; instructor only if owns the course
+        // Access already authorized via middleware (admin/instructor).
+        // Allow all instructors and admins to review submissions irrespective of course ownership.
         const course = await Course.findById(assignment.course);
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
-        }
-        if (req.user.role !== 'admin' && course.instructor.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ message: 'Not authorized' });
         }
 
         const submissions = await Submission.find({ assignment: req.params.id })
@@ -140,13 +138,11 @@ const gradeSubmission = async (req, res) => {
             return res.status(404).json({ message: 'Assignment not found' });
         }
 
-        // Ownership check
+        // Access already authorized via middleware (admin/instructor).
+        // Allow all instructors and admins to grade irrespective of course ownership.
         const course = await Course.findById(assignment.course);
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
-        }
-        if (req.user.role !== 'admin' && course.instructor.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ message: 'Not authorized' });
         }
 
         const { score, status } = req.body;
