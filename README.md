@@ -81,3 +81,4 @@
 **Notes**
 - CORS enabled globally.
 - Ensure `JWT_SECRET` and `MONGODB_URI` are set for all environments.
+- The frontend github repository link `https://github.com/mohammad-atikuzzaman/CourseMaster`
